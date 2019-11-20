@@ -1,37 +1,48 @@
-# Postpython
-Postpython is a library for [Postman](https://www.getpostman.com/) that run Postman's collections.
-If you are using postman, but collection runner is not flexible enough for you and postman codegen is too boring,
-Postpython is here for your continuous integration.
+# Postpy2
 
-## Why use Postpython instead of postman codegen?
+Postpy2 is a library for [Postman](https://www.getpostman.com/) that run Postman's collections. Originaly was forked from https://github.com/k3rn3l-p4n1c/postpython and updated to Postman collection v2.1 format.
+If you are using postman, but collection runner is not flexible enough for you and postman codegen is too boring,
+Postpy2 is here for your continuous integration.
+
+## Why use Postpy2 instead of postman codegen?
+
 - Postman codegen should be applied one by one for each request and it's boring when your API changes,
- but with postpython, you don't need to generate code.
- Just export collection with Postman and use it with Postpython.
+  but with Postpy2, you don't need to generate code.
+  Just export collection with Postman and use it with Postpy2.
 - In code generation, you don't have environment feature anymore and variables are hard coded.
 
-## Why user Postpython instead of Postman collection runner?
-- With postpython, you write your own script. But collection runner just turns all your requests one by one.
-So with Postpython, you can design more complex test suites.
+## Why user Postpy2 instead of Postman collection runner?
+
+- With Postpy2, you write your own script. But collection runner just turns all your requests one by one.
+  So with Postpy2, you can design more complex test suites.
 
 ## How to install?
-Postpython is available on [PyPI](https://pypi.python.org/pypi?name=postpython&version=0.1.2&:action=display)
- and you can install it using pip:
+
+Postpy2 is available on [PyPI](https://pypi.python.org/pypi?name=Postpy2&version=0.0.1&:action=display)
+and you can install it using pip:
+
 ```
-$ pip install postpython
+$ pip install Postpy2
 ```
+
 ## How to use?
 
-Import `PostPython`
+Import `Postpy2`
+
 ```$python
-from postpython.core import PostPython
+from Postpy2.core import Postpy2
 ```
-Make an instance from `PostPython` and give the address of postman collection file.
+
+Make an instance from `Postpy2` and give the address of postman collection file.
+
 ```$python
-runner = PostPython('/path/to/collection/Postman echo.postman_collection')
+runner = Postpy2('/path/to/collection/Postman echo.postman_collection')
 ```
+
 Now you can call your request. Folders' name change to upper camel case and requests' name change to lowercase form.
 In this example the name of folder is "Request Methods" and it's change to `RequestMethods` and the name of request was
 "GET Request" and it's change to `get_request`. So you should call a function like `runner.YourFolderName.you_request_name()`
+
 ```$python
 response = runner.RequestMethods.get_request()
 print(response.json())
@@ -39,27 +50,34 @@ print(response.status_code)
 ```
 
 ### Variable assignment
-In Postpython you can assign values to environment variables in runtime.
+
+In Postpy2 you can assign values to environment variables in runtime.
+
 ```
 runner.environments.update({'BASE_URL': 'http://127.0.0.1:5000'})
 runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 ```
+
 ### AttributeError
+
 Since `RequestMethods` and `get_request` does not really exists your intelligent IDE cannot help you.
-So Postpython tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
+So Postpy2 tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
+
 ```
 >>> response = runner.RequestMethods.get_requasts()
 
 Traceback (most recent call last):
   File "test.py", line 11, in <module>
     response = runner.RequestMethods.get_requasts()
-  File "/usr/local/lib/python3.5/site-packages/postpython/core.py", line 73, in __getattr__
+  File "/usr/local/lib/python3.5/site-packages/Postpy2/core.py", line 73, in __getattr__
     'Did you mean %s' % (item, self.name, similar))
 AttributeError: get_requasts request does not exist in RequestMethods folder.
 Did you mean get_request
 
 ```
+
 You can also use `help()` method to print all available requests.
+
 ```
 >>> runner.help()
 Posible requests:
@@ -83,5 +101,6 @@ runner.RequestMethods.post_request()
 ```
 
 ## Contribution
-Feel free to share your ideas or any problems in [issues](https://github.com/k3rn3l-p4n1c/postpython/issues).
-Contributions are welcomed. Give postpython a star to encourage me to continue its development.
+
+Feel free to share your ideas or any problems in [issues](https://github.com/matkapi/Postpy2/issues).
+Contributions are welcomed. Give Postpy2 a star to encourage me to continue its development.

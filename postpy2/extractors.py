@@ -20,6 +20,18 @@ def extract_dict_from_raw_headers(raw):
     return d
 
 
+def extract_dict_from_headers(data):
+    d = {}
+    for header in data:
+        try:
+            # key, value = header.split(': ')
+            d[header['key']] = header['value']
+        except ValueError:
+            continue
+
+    return d
+
+
 def format_object(o, key_values):
     if isinstance(o, str):
         try:
