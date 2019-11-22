@@ -108,7 +108,6 @@ class PostRequest:
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
         formatted_kwargs = format_object(self.request_kwargs, new_env)
-        print(formatted_kwargs)
         return requests.request(**formatted_kwargs)
 
 
