@@ -5,7 +5,7 @@ from copy import copy
 
 import requests
 
-from postpy2.extractors import extract_dict_from_raw_headers, extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object
+from postpy2.extractors import extract_dict_from_raw_headers, extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
 
 
 class CaseSensitiveDict(dict):
@@ -100,6 +100,9 @@ class PostRequest:
         if 'body' in data and data['body']['mode'] == 'raw' and 'raw' in data['body']:
             self.request_kwargs['json'] = extract_dict_from_raw_mode_data(
                 data['body']['raw'])
+        if 'body' in data and data['body']['mode'] == 'formdata' and 'formdata' in data['body']:
+            self.request_kwargs['data'], self.request_kwargs['files'] = extract_dict_from_formdata_mode_data(
+                data['body']['formdata'])
         self.request_kwargs['headers'] = extract_dict_from_headers(
             data['header'])
         self.request_kwargs['method'] = data['method']
@@ -109,6 +112,16 @@ class PostRequest:
         new_env.update(kwargs)
         formatted_kwargs = format_object(self.request_kwargs, new_env)
         return requests.request(**formatted_kwargs)
+
+    def set_files(self, data):
+        files = self.request_kwargs['files']
+        for row in data:
+            self.request_kwargs['files'][row['key']
+                                         ] = exctact_dict_from_files(row)
+
+    def set_data(self, data):
+        for row in data:
+            self.request_kwargs['data'][row['key']] = row['value']
 
 
 def normalize_class_name(string):

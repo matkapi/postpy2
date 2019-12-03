@@ -21,7 +21,7 @@ Postpy2 is here for your continuous integration.
 Postpy2 is available on [PyPI](https://pypi.python.org/pypi?name=Postpy2&version=0.0.1&:action=display)
 and you can install it using pip:
 
-```
+```bash
 $ pip install Postpy2
 ```
 
@@ -49,11 +49,19 @@ print(response.json())
 print(response.status_code)
 ```
 
+### Load enviroment variables
+
+In Postpy2 you can load enviromental variables from postman enviroment files
+
+```$python
+pp.environments.load('environments/test.postman_environment.json')
+```
+
 ### Variable assignment
 
 In Postpy2 you can assign values to environment variables in runtime.
 
-```
+```$python
 runner.environments.update({'BASE_URL': 'http://127.0.0.1:5000'})
 runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 ```
@@ -63,14 +71,14 @@ runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 Since `RequestMethods` and `get_request` does not really exists your intelligent IDE cannot help you.
 So Postpy2 tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
 
-```
+```$python
 >>> response = runner.RequestMethods.get_requasts()
 
 Traceback (most recent call last):
-  File "test.py", line 11, in <module>
-    response = runner.RequestMethods.get_requasts()
-  File "/usr/local/lib/python3.5/site-packages/Postpy2/core.py", line 73, in __getattr__
-    'Did you mean %s' % (item, self.name, similar))
+File "test.py", line 11, in <module>
+response = runner.RequestMethods.get_requasts()
+File "/usr/local/lib/python3.5/site-packages/Postpy2/core.py", line 73, in **getattr**
+'Did you mean %s' % (item, self.name, similar))
 AttributeError: get_requasts request does not exist in RequestMethods folder.
 Did you mean get_request
 
@@ -78,25 +86,26 @@ Did you mean get_request
 
 You can also use `help()` method to print all available requests.
 
-```
+```$python
+
 >>> runner.help()
-Posible requests:
-runner.AuthOthers.hawk_auth()
-runner.AuthOthers.basic_auth()
-runner.AuthOthers.oauth1_0_verify_signature()
-runner.RequestMethods.get_request()
-runner.RequestMethods.put_request()
-runner.RequestMethods.delete_request()
-runner.RequestMethods.post_request()
-runner.RequestMethods.patch_request()
-...
+>>> Posible requests:
+>>> runner.AuthOthers.hawk_auth()
+>>> runner.AuthOthers.basic_auth()
+>>> runner.AuthOthers.oauth1_0_verify_signature()
+>>> runner.RequestMethods.get_request()
+>>> runner.RequestMethods.put_request()
+>>> runner.RequestMethods.delete_request()
+>>> runner.RequestMethods.post_request()
+>>> runner.RequestMethods.patch_request()
+>>> ...
 
 >>> runner.RequestMethods.help()
-runner.RequestMethods.delete_request()
-runner.RequestMethods.patch_request()
-runner.RequestMethods.get_request()
-runner.RequestMethods.put_request()
-runner.RequestMethods.post_request()
+>>> runner.RequestMethods.delete_request()
+>>> runner.RequestMethods.patch_request()
+>>> runner.RequestMethods.get_request()
+>>> runner.RequestMethods.put_request()
+>>> runner.RequestMethods.post_request()
 
 ```
 

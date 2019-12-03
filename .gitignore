@@ -135,3 +135,6 @@ ENV/
 .ropeproject
 
 .idea/
+
+# VS Code
+.vscode/

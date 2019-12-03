@@ -1,61 +1,97 @@
 {
-	"info": {
-		"_postman_id": "a5dad26f-4c60-40e1-8ca0-85fe639f2f3e",
-		"name": "tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "folder",
-			"item": [
-				{
-					"name": "test1",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{server_url}}/todos/1",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"todos",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "test2",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-type",
-								"value": "application/json; charset=UTF-8",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}"
-						},
-						"url": {
-							"raw": "{{server_url}}/posts",
-							"host": [
-								"{{server_url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		}
-	],
-	"protocolProfileBehavior": {}
+  "info": {
+    "_postman_id": "a5dad26f-4c60-40e1-8ca0-85fe639f2f3e",
+    "name": "tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "folder",
+      "item": [
+        {
+          "name": "test1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{server_url}}/get",
+              "host": ["{{server_url}}"],
+              "path": ["get"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "test2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-type",
+                "value": "application/json; charset=UTF-8",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{server_url}}/post",
+              "host": ["{{server_url}}"],
+              "path": ["post"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "test file",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/home/mato/Projects/python/postpython/aserts/1.jpg"
+                },
+                {
+                  "key": "title",
+                  "value": "foo",
+                  "type": "text"
+                },
+                {
+                  "key": "body",
+                  "value": "bar",
+                  "type": "text"
+                },
+                {
+                  "key": "userId",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/post",
+              "host": ["{{server_url}}"],
+              "path": ["post"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "protocolProfileBehavior": {}
 }

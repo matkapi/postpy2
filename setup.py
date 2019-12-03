@@ -6,10 +6,10 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='postpy2',
     packages=['postpy2'],
-    version='0.0.2',
+    version='0.0.3',
     author='Martin Kapinos',
     author_email='matkapi19@gmail.com',
-    description='A library to use postman collection V2 in python. Inspired by https://github.com/k3rn3l-p4n1c/postpython Bardia Heydari nejad',
+    description='A library to use postman collection V2 in python.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/matkapi/postpy2',
@@ -17,6 +17,7 @@ setuptools.setup(
     keywords=['postman', 'rest', 'api'],  # arbitrary keywords
     install_requires=[
         'requests',
+        'python-magic'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

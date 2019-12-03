@@ -1,11 +1,48 @@
 import json
+import ntpath
+import magic
 
 
 def extract_dict_from_raw_mode_data(raw):
+    """extract json to dictionay
+
+    :param raw: jsondata
+    :return: :extracted dict
+    """
     try:
         return json.loads(raw)
     except json.decoder.JSONDecodeError:
         return {}
+
+
+def exctact_dict_from_files(data):
+    """extract files from dict data.
+
+    :param data: [{"key":"filename", "src":"relative/absolute path to file"}]
+    :return: :tuple of file metadata for requests library
+    """
+
+    mime = magic.Magic(mime=True)
+    file_mime = mime.from_file(data['src'])
+    file_name = ntpath.basename(data['src'])
+    return (file_name, open(data['src'], 'rb'), file_mime, {
+        'Content-Disposition': 'form-data; name="'+data['key']+'"; filename="' + file_name + '"',
+        'Content-Type': file_mime})
+
+
+def extract_dict_from_formdata_mode_data(formdata):
+    data = {}
+    files = {}
+    try:
+        for row in formdata:
+            if row['type'] == "text":
+                data[row['key']] = row['value']
+            if row['type'] == "file":
+                files[row['key']] = exctact_dict_from_files(row)
+        return data, files
+    except NameError:
+        print("extact from formdata_mode_data error occurred. Error: "+NameError)
+        return data, files
 
 
 def extract_dict_from_raw_headers(raw):
@@ -24,7 +61,6 @@ def extract_dict_from_headers(data):
     d = {}
     for header in data:
         try:
-            # key, value = header.split(': ')
             d[header['key']] = header['value']
         except ValueError:
             continue
@@ -43,6 +79,8 @@ def format_object(o, key_values):
         return format_dict(o, key_values)
     elif isinstance(o, list):
         return [format_object(oo, key_values) for oo in o]
+    elif isinstance(o, object):
+        return o
 
 
 def format_dict(d, key_values):
