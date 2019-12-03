@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- hotfix check for disabled headers
+
 ## 0.0.4
 
 - checking file existence in extractors.py/exctact_dict_from_files

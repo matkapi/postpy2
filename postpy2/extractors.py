@@ -65,7 +65,7 @@ def extract_dict_from_headers(data):
     for header in data:
         try:
             if 'disabled' in header and header['disabled'] == True:
-                break
+                continue
             d[header['key']] = header['value']
         except ValueError:
             continue
