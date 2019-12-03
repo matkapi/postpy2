@@ -53,7 +53,8 @@
                 "key": "Content-Type",
                 "name": "Content-Type",
                 "value": "application/x-www-form-urlencoded",
-                "type": "text"
+                "type": "text",
+                "disabled": true
               }
             ],
             "body": {

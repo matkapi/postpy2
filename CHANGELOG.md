@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.4
+
+- checking file existence in extractors.py/exctact_dict_from_files
+- added check for disabled headers
+
 ## 0.0.3
 
 - added support for formdata and files

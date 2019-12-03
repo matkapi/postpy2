@@ -1,6 +1,7 @@
 import json
 import ntpath
 import magic
+import os
 
 
 def extract_dict_from_raw_mode_data(raw):
@@ -21,7 +22,9 @@ def exctact_dict_from_files(data):
     :param data: [{"key":"filename", "src":"relative/absolute path to file"}]
     :return: :tuple of file metadata for requests library
     """
-
+    if not os.path.isfile(data['src']):
+        raise Exception(
+            'File '+data['src']+' does not exists')
     mime = magic.Magic(mime=True)
     file_mime = mime.from_file(data['src'])
     file_name = ntpath.basename(data['src'])
@@ -40,8 +43,8 @@ def extract_dict_from_formdata_mode_data(formdata):
             if row['type'] == "file":
                 files[row['key']] = exctact_dict_from_files(row)
         return data, files
-    except NameError:
-        print("extact from formdata_mode_data error occurred. Error: "+NameError)
+    except Exception:
+        print("extact from formdata_mode_data error occurred: ")
         return data, files
 
 
@@ -61,6 +64,8 @@ def extract_dict_from_headers(data):
     d = {}
     for header in data:
         try:
+            if 'disabled' in header and header['disabled'] == True:
+                break
             d[header['key']] = header['value']
         except ValueError:
             continue
