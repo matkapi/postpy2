@@ -123,6 +123,9 @@ class PostRequest:
         for row in data:
             self.request_kwargs['data'][row['key']] = row['value']
 
+    def set_json(self, data):
+        self.request_kwargs['json'] = data
+
 
 def normalize_class_name(string):
     string = re.sub(r'[?!@#$%^&*()_\-+=,./\'\\\"|:;{}\[\]]', ' ', string)

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.6
+
+- added method set_json in PostRequest class for overide json (raw data)
+
 ## 0.0.5
 
 - hotfix check for disabled headers
