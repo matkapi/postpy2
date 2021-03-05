@@ -114,7 +114,6 @@ class PostRequest:
         return requests.request(**formatted_kwargs)
 
     def set_files(self, data):
-        files = self.request_kwargs['files']
         for row in data:
             self.request_kwargs['files'][row['key']
                                          ] = exctact_dict_from_files(row)
