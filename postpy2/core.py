@@ -110,6 +110,9 @@ class PostRequest:
     def __call__(self, *args, **kwargs):
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
+        if 'files' in self.request_kwargs:
+            for key, file in self.request_kwargs['files'].items():
+                file[1].seek(0) # flip byte stream for subsequent reads
         formatted_kwargs = format_object(self.request_kwargs, new_env)
         return requests.request(**formatted_kwargs)
 

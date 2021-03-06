@@ -30,7 +30,6 @@ def exctact_dict_from_files(data):
     file_name = ntpath.basename(data['src'])
     with open(data['src'], 'rb') as fs:
         bs = BytesIO(fs.read()) # read bytes from file into memory
-    bs.seek(0) # flip byte stream for subsequent reads
     return (file_name, bs, file_mime, {
         'Content-Disposition': 'form-data; name="'+data['key']+'"; filename="' + file_name + '"',
         'Content-Type': file_mime})
