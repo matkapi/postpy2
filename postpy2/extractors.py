@@ -75,11 +75,14 @@ def extract_dict_from_headers(data):
 
 def format_object(o, key_values):
     if isinstance(o, str):
-        try:
-            return o.replace('{{', '{').replace('}}', '}').format(**key_values)
-        except KeyError as e:
-            raise KeyError(
-                "Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
+        if o.startswith('mutation') or o.startswith('query') or o.startswith('subscription'):
+            return o
+        else:
+            try:
+                return o.replace('{{', '{').replace('}}', '}').format(**key_values)
+            except KeyError as e:
+                raise KeyError(
+                    "Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
     elif isinstance(o, dict):
         return format_dict(o, key_values)
     elif isinstance(o, list):

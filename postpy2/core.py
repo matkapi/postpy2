@@ -112,11 +112,8 @@ class PostRequest:
     def __call__(self, *args, **kwargs):
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
-        if self.request_kwargs['url'].endswith('graphql'):
-            return requests.request(**self.request_kwargs)
-        else:
-            return format_object(self.request_kwargs, new_env)
-
+        formatted_kwargs = format_object(self.request_kwargs, new_env)
+        return requests.request(**formatted_kwargs)
 
     def set_files(self, data):
         files = self.request_kwargs['files']
@@ -144,6 +141,12 @@ def normalize_func_name(string):
 
 def normalize_graphql_variables(body: dict) -> dict:
     variables = body['variables']
-    if isinstance(variables, str):
-        body['variables'] = eval(variables)
+    if len(variables) > 0:
+        if isinstance(variables, str):
+            normalized_variables = normalize_boolean_types(variables)
+            body['variables'] = eval(normalized_variables)
     return body
+
+
+def normalize_boolean_types(string: str) -> str:
+    return string.replace(": false", ": False").replace(": true", ": True")
