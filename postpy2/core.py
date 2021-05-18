@@ -103,6 +103,8 @@ class PostRequest:
         if 'body' in data and data['body']['mode'] == 'formdata' and 'formdata' in data['body']:
             self.request_kwargs['data'], self.request_kwargs['files'] = extract_dict_from_formdata_mode_data(
                 data['body']['formdata'])
+        if 'body' in data and data['body']['mode'] == 'graphql' and 'graphql' in data['body']:
+            self.request_kwargs['json'] = normalize_graphql_variables(data['body']['graphql'])
         self.request_kwargs['headers'] = extract_dict_from_headers(
             data['header'])
         self.request_kwargs['method'] = data['method']
@@ -110,8 +112,11 @@ class PostRequest:
     def __call__(self, *args, **kwargs):
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
-        formatted_kwargs = format_object(self.request_kwargs, new_env)
-        return requests.request(**formatted_kwargs)
+        if self.request_kwargs['url'].endswith('graphql'):
+            return requests.request(**self.request_kwargs)
+        else:
+            return format_object(self.request_kwargs, new_env)
+
 
     def set_files(self, data):
         files = self.request_kwargs['files']
@@ -135,3 +140,10 @@ def normalize_class_name(string):
 def normalize_func_name(string):
     string = re.sub(r'[?!@#$%^&*()_\-+=,./\'\\\"|:;{}\[\]]', ' ', string)
     return '_'.join(string.lower().split())
+
+
+def normalize_graphql_variables(body: dict) -> dict:
+    variables = body['variables']
+    if isinstance(variables, str):
+        body['variables'] = eval(variables)
+    return body
