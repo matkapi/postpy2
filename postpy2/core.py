@@ -5,7 +5,7 @@ from copy import copy
 
 import requests
 
-from postpy2.extractors import extract_dict_from_raw_headers, extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
+from postpy2.extractors import extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
 
 
 class CaseSensitiveDict(dict):
@@ -15,10 +15,10 @@ class CaseSensitiveDict(dict):
         for k, v in d.items():
             self[k] = v
 
-    def load(self, postman_enviroment_file_path):
-        with open(postman_enviroment_file_path, encoding='utf8') as postman_enviroment_file:
-            postman_enviroment = json.load(postman_enviroment_file)
-            for item in postman_enviroment['values']:
+    def load(self, postman_environment_file_path):
+        with open(postman_environment_file_path, encoding='utf8') as postman_environment_file:
+            postman_environment = json.load(postman_environment_file)
+            for item in postman_environment['values']:
                 if item['enabled']:
                     self[item['key']] = item['value']
 
@@ -116,7 +116,6 @@ class PostRequest:
         return requests.request(**formatted_kwargs)
 
     def set_files(self, data):
-        files = self.request_kwargs['files']
         for row in data:
             self.request_kwargs['files'][row['key']
                                          ] = exctact_dict_from_files(row)
@@ -139,14 +138,14 @@ def normalize_func_name(string):
     return '_'.join(string.lower().split())
 
 
-def normalize_graphql_variables(body: dict) -> dict:
-    variables = body['variables']
-    if len(variables) > 0:
+def normalize_graphql_variables(graphql_body: dict) -> dict:  # it came as a string from Postman
+    variables = graphql_body['variables']
+    if len(variables) > 0:   # for those cases when there are no variables
         if isinstance(variables, str):
             normalized_variables = normalize_boolean_types(variables)
-            body['variables'] = eval(normalized_variables)
-    return body
+            graphql_body['variables'] = eval(normalized_variables)
+    return graphql_body
 
 
-def normalize_boolean_types(string: str) -> str:
+def normalize_boolean_types(string: str) -> str:  # have to change Postman's true, false to Python's True, False
     return string.replace(": false", ": False").replace(": true", ": True")
