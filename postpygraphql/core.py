@@ -5,7 +5,7 @@ from copy import copy
 
 import requests
 
-from postpy2.extractors import extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
+from postpygraphql.extractors import extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
 
 
 class CaseSensitiveDict(dict):

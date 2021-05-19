@@ -1,4 +1,4 @@
-from postpy2.core import PostPython
+from postpygraphql.core import PostPython
 import unittest2 as unittest
 import json
 
