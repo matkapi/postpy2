@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.2
+
+- Added support for double braces inside key
+- Updated readme
 
 ## 0.0.1
 

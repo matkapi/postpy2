@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='postpygraphql',
     packages=['postpygraphql'],
-    version='0.0.1',
+    version='0.0.2',
     author='Dmitriy Tregubov',
     author_email='hedin358@mail.ru',
     description='A library to use postman collection V2.1 in python.',
