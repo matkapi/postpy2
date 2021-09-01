@@ -5,7 +5,8 @@ from copy import copy
 
 import requests
 
-from postpygraphql.extractors import extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
+from postpygraphql.extractors import extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, \
+    extract_dict_from_formdata_mode_data, exctact_dict_from_files
 
 
 class CaseSensitiveDict(dict):
@@ -140,7 +141,7 @@ def normalize_func_name(string):
 
 def normalize_graphql_variables(graphql_body: dict) -> dict:  # it came as a string from Postman
     variables = graphql_body['variables']
-    if len(variables) > 0:   # for those cases when there are no variables
+    if len(variables) > 0:  # for cases when there are no variables
         if isinstance(variables, str):
             normalized_variables = normalize_boolean_types(variables)
             graphql_body['variables'] = eval(normalized_variables)

@@ -84,7 +84,9 @@ def format_object(o, key_values):
             except KeyError as e:
                 raise KeyError(
                     "Except value %s in PostPython environment variables.\n Environment variables are %s" % (
-                    e, key_values))
+                        e, key_values))
+            except ValueError:  # it's for cases when we have double braces inside value and don't need to parse it
+                return o
     elif isinstance(o, dict):
         return format_dict(o, key_values)
     elif isinstance(o, list):
