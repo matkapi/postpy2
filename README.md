@@ -1,24 +1,24 @@
-# PostpyGraphQL
+# PostPyGraphQL
 
-PostpyGraphQL is a library for [Postman](https://www.getpostman.com/) that run Postman's collections. Originaly was forked from https://github.com/matkapi/postpy2 and updated for using body mode GraphQL.
+PostPyGraphQL is a library for [Postman](https://www.getpostman.com/) that run Postman's collections. Originaly was forked from https://github.com/matkapi/postpy2 and updated for using body mode GraphQL.
 If you are using postman, but collection runner is not flexible enough for you and postman codegen is too boring,
-PostpyGraphQL is here for your continuous integration.
+PostPyGraphQL is here for your continuous integration.
 
-## Why use PostpyGraphQL instead of postman codegen?
+## Why use PostPyGraphQL instead of postman codegen?
 
 - Postman codegen should be applied one by one for each request and it's boring when your API changes,
-  but with PostpyGraphQL, you don't need to generate code.
-  Just export collection with Postman and use it with PostpyGraphQL.
+  but with PostPyGraphQL, you don't need to generate code.
+  Just export collection with Postman and use it with PostPyGraphQL.
 - In code generation, you don't have environment feature anymore and variables are hard coded.
 
 ## Why user PostpyGraphQL instead of Postman collection runner?
 
-- With PostpyGraphQL, you write your own script. But collection runner just turns all your requests one by one.
-  So with PostpyGraphQL, you can design more complex test suites.
+- With PostPyGraphQL, you write your own script. But collection runner just turns all your requests one by one.
+  So with PostPyGraphQL, you can design more complex test suites.
 
 ## How to install?
 
-PostpyGraphQL is available on [PyPI](https://pypi.python.org/pypi?name=postpygraphql&version=0.0.1&:action=display)
+PostPyGraphQL is available on [PyPI](https://pypi.python.org/pypi?name=postpygraphql&version=0.0.1&:action=display)
 and you can install it using pip:
 
 ```bash
@@ -51,7 +51,7 @@ print(response.status_code)
 
 ### Load enviroment variables
 
-In PostpyGraphQL you can load enviromental variables from postman enviroment files
+In PostPyGraphQL you can load environmental variables from postman environment files
 
 ```$python
 pp.environments.load('environments/test.postman_environment.json')
@@ -59,7 +59,7 @@ pp.environments.load('environments/test.postman_environment.json')
 
 ### Variable assignment
 
-In PostpyGraphQL you can assign values to environment variables in runtime.
+In PostPyGraphQL you can assign values to environment variables in runtime.
 
 ```$python
 runner.environments.update({'BASE_URL': 'http://127.0.0.1:5000'})
@@ -69,7 +69,7 @@ runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 ### AttributeError
 
 Since `RequestMethods` and `get_request` does not really exists your intelligent IDE cannot help you.
-So PostpyGraphQL tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
+So PostPyGraphQL tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
 
 ```$python
 >>> response = runner.RequestMethods.get_requasts()
@@ -112,4 +112,4 @@ You can also use `help()` method to print all available requests.
 ## Contribution
 
 Feel free to share your ideas or any problems in [issues](https://github.com/dtregubov/postpygraphql/issues).
-Contributions are welcomed. Give PostpyGraphQL a star to encourage me to continue its development.
+Contributions are welcomed. Give PostPyGraphQL a star to encourage me to continue its development.
