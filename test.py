@@ -45,3 +45,7 @@ pp.Folder.test2.set_json({"title": "bar", "body": "foo", "userId": 1})
 response = pp.Folder.test2()
 print(response.json())
 print(response.status_code)
+
+response = pp.Folder.graphql()
+print(response.status_code)
+print(len(response.json()))
