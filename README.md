@@ -66,6 +66,17 @@ runner.environments.update({'BASE_URL': 'http://127.0.0.1:5000'})
 runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 ```
 
+### Override Request Parameters
+
+It may be useful to override request parameters at runtime. You can do this using the `request_overrides` option: 
+
+```python
+headers  = { "MyHeader": "Value" }
+pp = PostPython('collections/tests.postman_collection.json', request_overrides={
+    'headers': headers
+})
+```
+
 ### AttributeError
 
 Since `RequestMethods` and `get_request` does not really exists your intelligent IDE cannot help you.
