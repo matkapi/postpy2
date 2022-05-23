@@ -4,6 +4,7 @@ import re
 from copy import copy
 
 import requests
+from mergedeep import merge
 
 from postpy2.extractors import extract_dict_from_raw_headers, extract_dict_from_headers, extract_dict_from_raw_mode_data, format_object, extract_dict_from_formdata_mode_data, exctact_dict_from_files
 
@@ -24,12 +25,13 @@ class CaseSensitiveDict(dict):
 
 
 class PostPython:
-    def __init__(self, postman_collection_file_path):
+    def __init__(self, postman_collection_file_path, request_overrides=None):
         with open(postman_collection_file_path, encoding='utf8') as postman_collection_file:
             self.__postman_collection = json.load(postman_collection_file)
 
         self.__folders = {}
         self.environments = CaseSensitiveDict()
+        self.request_overrides = request_overrides
         self.__load()
 
     def __load(self):
@@ -117,13 +119,23 @@ class PostRequest:
         self.request_kwargs['method'] = data['method']
 
     def __call__(self, *args, **kwargs):
+
+        current_request_kwargs = copy(self.request_kwargs)
+
+        if self.post_python.request_overrides:
+            current_request_kwargs = merge(current_request_kwargs, self.post_python.request_overrides)
+
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
-        formatted_kwargs = format_object(self.request_kwargs, new_env, self.is_graphql)
+
+        if 'files' in current_request_kwargs:
+            for key, file in current_request_kwargs['files'].items():
+                file[1].seek(0) # flip byte stream for subsequent reads
+
+        formatted_kwargs = format_object(current_request_kwargs, new_env, self.is_graphql)
         return requests.request(**formatted_kwargs)
 
     def set_files(self, data):
-        files = self.request_kwargs['files']
         for row in data:
             self.request_kwargs['files'][row['key']
                                          ] = exctact_dict_from_files(row)

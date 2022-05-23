@@ -2,7 +2,7 @@ import json
 import ntpath
 import magic
 import os
-
+from io import BytesIO
 
 def extract_dict_from_raw_mode_data(raw):
     """extract json to dictionay
@@ -28,7 +28,9 @@ def exctact_dict_from_files(data):
     mime = magic.Magic(mime=True)
     file_mime = mime.from_file(data['src'])
     file_name = ntpath.basename(data['src'])
-    return (file_name, open(data['src'], 'rb'), file_mime, {
+    with open(data['src'], 'rb') as fs:
+        bs = BytesIO(fs.read()) # read bytes from file into memory
+    return (file_name, bs, file_mime, {
         'Content-Disposition': 'form-data; name="'+data['key']+'"; filename="' + file_name + '"',
         'Content-Type': file_mime})
 
