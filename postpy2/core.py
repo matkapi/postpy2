@@ -99,14 +99,23 @@ class PostRequest:
         self.post_python = post_python
         self.request_kwargs = dict()
         self.request_kwargs['url'] = data['url']['raw']
+        self.is_graphql = False
+
         if 'body' in data and data['body']['mode'] == 'raw' and 'raw' in data['body']:
             self.request_kwargs['json'] = extract_dict_from_raw_mode_data(
                 data['body']['raw'])
+
         if 'body' in data and data['body']['mode'] == 'formdata' and 'formdata' in data['body']:
             self.request_kwargs['data'], self.request_kwargs['files'] = extract_dict_from_formdata_mode_data(
                 data['body']['formdata'])
-        self.request_kwargs['headers'] = extract_dict_from_headers(
-            data['header'])
+
+        if 'body' in data and data['body']['mode'] == 'graphql':
+            self.request_kwargs['json'] = data['body']['graphql']
+            if data['body']['graphql']['variables'] == "":
+                data['body']['graphql']['variables'] = "{}"
+            self.is_graphql = True
+
+        self.request_kwargs['headers'] = extract_dict_from_headers(data['header'])
         self.request_kwargs['method'] = data['method']
 
     def __call__(self, *args, **kwargs):
@@ -119,11 +128,11 @@ class PostRequest:
         new_env = copy(self.post_python.environments)
         new_env.update(kwargs)
 
-        if 'files' in self.request_kwargs:
-            for key, file in self.request_kwargs['files'].items():
+        if 'files' in current_request_kwargs:
+            for key, file in current_request_kwargs['files'].items():
                 file[1].seek(0) # flip byte stream for subsequent reads
-        formatted_kwargs = format_object(current_request_kwargs, new_env)
 
+        formatted_kwargs = format_object(current_request_kwargs, new_env, self.is_graphql)
         return requests.request(**formatted_kwargs)
 
     def set_files(self, data):

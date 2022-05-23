@@ -75,23 +75,28 @@ def extract_dict_from_headers(data):
     return d
 
 
-def format_object(o, key_values):
+def format_object(o, key_values, is_graphql=False):
+    print(o)
     if isinstance(o, str):
         try:
+            if is_graphql:
+                return o
+
             return o.replace('{{', '{').replace('}}', '}').format(**key_values)
+
         except KeyError as e:
             raise KeyError(
                 "Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
     elif isinstance(o, dict):
-        return format_dict(o, key_values)
+        return format_dict(o, key_values, is_graphql)
     elif isinstance(o, list):
-        return [format_object(oo, key_values) for oo in o]
+        return [format_object(oo, key_values, is_graphql) for oo in o]
     elif isinstance(o, object):
         return o
 
 
-def format_dict(d, key_values):
+def format_dict(d, key_values, is_graphql):
     kwargs = {}
     for k, v in d.items():
-        kwargs[k] = format_object(v, key_values)
+        kwargs[k] = format_object(v, key_values, is_graphql)
     return kwargs

@@ -89,6 +89,39 @@
             }
           },
           "response": []
+        },
+        {
+            "name": "graphql",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "{\n  countries {\n    code \n    name\n  }\n}\n",
+                        "variables": ""
+                    }
+                },
+                "url": {
+                    "raw": "https://countries.trevorblades.com/",
+                    "protocol": "https",
+                    "host": [
+                        "countries",
+                        "trevorblades",
+                        "com"
+                    ],
+                    "path": [
+                        ""
+                    ]
+                }
+            },
+            "response": []
         }
       ],
       "protocolProfileBehavior": {}
