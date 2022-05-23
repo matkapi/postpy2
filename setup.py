@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='postpy2',
     packages=['postpy2'],
-    version='0.0.6',
+    version='0.0.7',
     author='Martin Kapinos',
     author_email='matkapi19@gmail.com',
     description='A library to use postman collection V2 in python.',
@@ -17,7 +17,8 @@ setuptools.setup(
     keywords=['postman', 'rest', 'api'],  # arbitrary keywords
     install_requires=[
         'requests',
-        'python-magic'
+        'python-magic',
+        'mergedeep'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
