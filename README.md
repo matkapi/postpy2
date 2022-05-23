@@ -30,13 +30,13 @@ $ pip install Postpy2
 Import `Postpy2`
 
 ```$python
-from Postpy2.core import Postpy2
+from postpy2.core import PostPython
 ```
 
-Make an instance from `Postpy2` and give the address of postman collection file.
+Make an instance from `PostPython` and give the address of postman collection file.
 
 ```$python
-runner = Postpy2('/path/to/collection/Postman echo.postman_collection')
+runner = PostPython('/path/to/collection/Postman echo.postman_collection')
 ```
 
 Now you can call your request. Folders' name change to upper camel case and requests' name change to lowercase form.
