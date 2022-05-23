@@ -34,8 +34,8 @@ from postpy2.core import PostPython
 
 Make an instance from `PostPython` and give the address of postman collection file.
 
-```$python
-runner = PostPython('/path/to/collection/Postman echo.postman_collection')
+```python
+runner = PostPython('/path/to/collection/postman_collection.json')
 ```
 
 Now you can call your request. Folders' name change to upper camel case and requests' name change to lowercase form.
