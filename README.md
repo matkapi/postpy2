@@ -18,8 +18,7 @@ Postpy2 is here for your continuous integration.
 
 ## How to install?
 
-Postpy2 is available on [PyPI](https://pypi.python.org/pypi?name=Postpy2&version=0.0.1&:action=display)
-and you can install it using pip:
+Postpy2 is available on [PyPI](https://pypi.org/project/postpy2/) and you can install it using pip:
 
 ```bash
 $ pip install Postpy2
