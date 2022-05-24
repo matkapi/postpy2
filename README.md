@@ -123,3 +123,15 @@ You can also use `help()` method to print all available requests.
 
 Feel free to share your ideas or any problems in [issues](https://github.com/matkapi/Postpy2/issues).
 Contributions are welcomed. Give Postpy2 a star to encourage me to continue its development.
+
+
+### Setup
+
+Assuming you are at the root of the repository and sourced a virtual environment:
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
+
+python -m pytest
+```
