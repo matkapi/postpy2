@@ -18,8 +18,7 @@ Postpy2 is here for your continuous integration.
 
 ## How to install?
 
-Postpy2 is available on [PyPI](https://pypi.python.org/pypi?name=Postpy2&version=0.0.1&:action=display)
-and you can install it using pip:
+Postpy2 is available on [PyPI](https://pypi.org/project/postpy2/) and you can install it using pip:
 
 ```bash
 $ pip install Postpy2
@@ -29,21 +28,21 @@ $ pip install Postpy2
 
 Import `Postpy2`
 
-```$python
+```python
 from postpy2.core import PostPython
 ```
 
 Make an instance from `PostPython` and give the address of postman collection file.
 
-```$python
-runner = PostPython('/path/to/collection/Postman echo.postman_collection')
+```python
+runner = PostPython('/path/to/collection/postman_collection.json')
 ```
 
 Now you can call your request. Folders' name change to upper camel case and requests' name change to lowercase form.
 In this example the name of folder is "Request Methods" and it's change to `RequestMethods` and the name of request was
 "GET Request" and it's change to `get_request`. So you should call a function like `runner.YourFolderName.you_request_name()`
 
-```$python
+```python
 response = runner.RequestMethods.get_request()
 print(response.json())
 print(response.status_code)
@@ -53,7 +52,7 @@ print(response.status_code)
 
 In Postpy2 you can load enviromental variables from postman enviroment files
 
-```$python
+```python
 pp.environments.load('environments/test.postman_environment.json')
 ```
 
@@ -61,7 +60,7 @@ pp.environments.load('environments/test.postman_environment.json')
 
 In Postpy2 you can assign values to environment variables in runtime.
 
-```$python
+```python
 runner.environments.update({'BASE_URL': 'http://127.0.0.1:5000'})
 runner.environments.update({'PASSWORD': 'test', 'EMAIL': 'you@email.com'})
 ```
@@ -82,7 +81,7 @@ pp = PostPython('collections/tests.postman_collection.json', request_overrides={
 Since `RequestMethods` and `get_request` does not really exists your intelligent IDE cannot help you.
 So Postpy2 tries to correct your mistakes. If you spell a function or folder wrong it will suggest you the closest name.
 
-```$python
+```python
 >>> response = runner.RequestMethods.get_requasts()
 
 Traceback (most recent call last):
@@ -97,7 +96,7 @@ Did you mean get_request
 
 You can also use `help()` method to print all available requests.
 
-```$python
+```python
 
 >>> runner.help()
 >>> Posible requests:
