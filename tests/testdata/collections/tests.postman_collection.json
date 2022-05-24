@@ -63,7 +63,7 @@
                 {
                   "key": "file",
                   "type": "file",
-                  "src": "/home/mato/Projects/python/postpython/aserts/1.jpg"
+                   "src": "tests/testdata/assets/1.jpg"
                 },
                 {
                   "key": "title",
