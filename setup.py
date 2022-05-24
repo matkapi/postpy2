@@ -3,6 +3,10 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open('requirements.txt', 'r') as f:
+    requirements = f.read()
+    requirements = requirements.split('\n')
+
 setuptools.setup(
     name='postpy2',
     packages=['postpy2'],
@@ -15,11 +19,7 @@ setuptools.setup(
     url='https://github.com/matkapi/postpy2',
     download_url='https://codeload.github.com/matkapi/postpy2/zip/master',
     keywords=['postman', 'rest', 'api'],  # arbitrary keywords
-    install_requires=[
-        'requests',
-        'python-magic',
-        'mergedeep'
-    ],
+    install_requires=[requirements],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
