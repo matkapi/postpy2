@@ -4,6 +4,7 @@ import magic
 import os
 from io import BytesIO
 
+
 def extract_dict_from_raw_mode_data(raw):
     """extract json to dictionay
 
@@ -22,17 +23,14 @@ def exctact_dict_from_files(data):
     :param data: [{"key":"filename", "src":"relative/absolute path to file"}]
     :return: :tuple of file metadata for requests library
     """
-    if not os.path.isfile(data['src']):
-        raise Exception(
-            'File '+data['src']+' does not exists')
+    if not os.path.isfile(data["src"]):
+        raise Exception("File " + data["src"] + " does not exists")
     mime = magic.Magic(mime=True)
-    file_mime = mime.from_file(data['src'])
-    file_name = ntpath.basename(data['src'])
-    with open(data['src'], 'rb') as fs:
-        bs = BytesIO(fs.read()) # read bytes from file into memory
-    return (file_name, bs, file_mime, {
-        'Content-Disposition': 'form-data; name="'+data['key']+'"; filename="' + file_name + '"',
-        'Content-Type': file_mime})
+    file_mime = mime.from_file(data["src"])
+    file_name = ntpath.basename(data["src"])
+    with open(data["src"], "rb") as fs:
+        bs = BytesIO(fs.read())  # read bytes from file into memory
+    return (file_name, bs, file_mime, {"Content-Disposition": 'form-data; name="' + data["key"] + '"; filename="' + file_name + '"', "Content-Type": file_mime})
 
 
 def extract_dict_from_formdata_mode_data(formdata):
@@ -40,10 +38,10 @@ def extract_dict_from_formdata_mode_data(formdata):
     files = {}
     try:
         for row in formdata:
-            if row['type'] == "text":
-                data[row['key']] = row['value']
-            if row['type'] == "file":
-                files[row['key']] = exctact_dict_from_files(row)
+            if row["type"] == "text":
+                data[row["key"]] = row["value"]
+            if row["type"] == "file":
+                files[row["key"]] = exctact_dict_from_files(row)
         return data, files
     except Exception:
         print("extact from formdata_mode_data error occurred: ")
@@ -52,9 +50,9 @@ def extract_dict_from_formdata_mode_data(formdata):
 
 def extract_dict_from_raw_headers(raw):
     d = {}
-    for header in raw.split('\n'):
+    for header in raw.split("\n"):
         try:
-            key, value = header.split(': ')
+            key, value = header.split(": ")
             d[key] = value
         except ValueError:
             continue
@@ -66,9 +64,9 @@ def extract_dict_from_headers(data):
     d = {}
     for header in data:
         try:
-            if 'disabled' in header and header['disabled'] == True:
+            if "disabled" in header and header["disabled"] == True:
                 continue
-            d[header['key']] = header['value']
+            d[header["key"]] = header["value"]
         except ValueError:
             continue
 
@@ -82,11 +80,10 @@ def format_object(o, key_values, is_graphql=False):
             if is_graphql:
                 return o
 
-            return o.replace('{{', '{').replace('}}', '}').format(**key_values)
+            return o.replace("{{", "{").replace("}}", "}").format(**key_values)
 
         except KeyError as e:
-            raise KeyError(
-                "Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
+            raise KeyError("Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
     elif isinstance(o, dict):
         return format_dict(o, key_values, is_graphql)
     elif isinstance(o, list):
