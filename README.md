@@ -133,5 +133,7 @@ Assuming you are at the root of the repository and sourced a virtual environment
 python -m pip install -r requirements.txt
 python -m pip install -r requirements-dev.txt
 
-python -m pytest
+python -m pytest --cov=$(pwd)/postpy2 --cov-fail-under=85
 ```
+
+or use `scripts/run_tests.sh`
