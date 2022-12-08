@@ -1,8 +1,14 @@
+"""postpy2 extractors."""
+import logging
 import json
 import ntpath
-import magic
 import os
 from io import BytesIO
+
+import magic
+
+logger = logging.getLogger(__name__)
+
 
 def extract_dict_from_raw_mode_data(raw):
     """extract json to dictionay
@@ -22,81 +28,91 @@ def exctact_dict_from_files(data):
     :param data: [{"key":"filename", "src":"relative/absolute path to file"}]
     :return: :tuple of file metadata for requests library
     """
-    if not os.path.isfile(data['src']):
-        raise Exception(
-            'File '+data['src']+' does not exists')
+    if not os.path.isfile(data["src"]):
+        raise Exception("File " + data["src"] + " does not exists")
     mime = magic.Magic(mime=True)
-    file_mime = mime.from_file(data['src'])
-    file_name = ntpath.basename(data['src'])
-    with open(data['src'], 'rb') as fs:
-        bs = BytesIO(fs.read()) # read bytes from file into memory
-    return (file_name, bs, file_mime, {
-        'Content-Disposition': 'form-data; name="'+data['key']+'"; filename="' + file_name + '"',
-        'Content-Type': file_mime})
+    file_mime = mime.from_file(data["src"])
+    file_name = ntpath.basename(data["src"])
+    with open(data["src"], "rb") as file_source:
+        bytes_source = BytesIO(file_source.read())  # read bytes from file into memory
+    return (
+        file_name,
+        bytes_source,
+        file_mime,
+        {
+            "Content-Disposition": 'form-data; name="' + data["key"] + '"; filename="' + file_name + '"',
+            "Content-Type": file_mime,
+        },
+    )
 
 
 def extract_dict_from_formdata_mode_data(formdata):
+    """Extract dict from formdata mode data."""
     data = {}
     files = {}
     try:
         for row in formdata:
-            if row['type'] == "text":
-                data[row['key']] = row['value']
-            if row['type'] == "file":
-                files[row['key']] = exctact_dict_from_files(row)
+            if row["type"] == "text":
+                data[row["key"]] = row["value"]
+            if row["type"] == "file":
+                files[row["key"]] = exctact_dict_from_files(row)
         return data, files
-    except Exception:
-        print("extact from formdata_mode_data error occurred: ")
+    except Exception as err:  # pylint: disable=W0703
+        logger.info("extact from formdata_mode_data error occurred: %s", err)
         return data, files
-
-
-def extract_dict_from_raw_headers(raw):
-    d = {}
-    for header in raw.split('\n'):
-        try:
-            key, value = header.split(': ')
-            d[key] = value
-        except ValueError:
-            continue
-
-    return d
 
 
 def extract_dict_from_headers(data):
-    d = {}
+    """Extract dict from headers."""
+    ret_data = {}
     for header in data:
         try:
-            if 'disabled' in header and header['disabled'] == True:
+            if "disabled" in header and header["disabled"] is True:
                 continue
-            d[header['key']] = header['value']
+            ret_data[header["key"]] = header["value"]
         except ValueError:
             continue
 
-    return d
+    return ret_data
 
 
-def format_object(o, key_values, is_graphql=False):
-    print(o)
-    if isinstance(o, str):
-        try:
-            if is_graphql:
-                return o
+def format_object(obj, key_values, is_graphql=False):
+    """Format object with variables."""
+    logger.debug(
+        "format_object (%s) %s - is_graphql: %s\nvariables: %s",
+        type(obj),
+        obj,
+        is_graphql,
+        key_values.keys(),
+    )
+    if isinstance(obj, str):
+        if is_graphql:
+            return obj
+        # fixes 'JSON body parsing issue with environment variable replacement #9'
+        for key, value in key_values.items():
+            logger.debug(key)
+            obj = obj.replace(f"{{{{{key}}}}}", str(value))
+        logger.debug("formatted object: %s", obj)
+        return obj
 
-            return o.replace('{{', '{').replace('}}', '}').format(**key_values)
+    if isinstance(obj, dict):
+        return format_dict(obj, key_values, is_graphql)
 
-        except KeyError as e:
-            raise KeyError(
-                "Except value %s in PostPython environment variables.\n Environment variables are %s" % (e, key_values))
-    elif isinstance(o, dict):
-        return format_dict(o, key_values, is_graphql)
-    elif isinstance(o, list):
-        return [format_object(oo, key_values, is_graphql) for oo in o]
-    elif isinstance(o, object):
-        return o
+    if isinstance(obj, list):
+        return [format_object(oobj, key_values, is_graphql) for oobj in obj]
+
+    logger.warning("Unhandled object of type %s", type(obj))
+    return obj
 
 
-def format_dict(d, key_values, is_graphql):
+def format_dict(data, key_values, is_graphql):
+    """Format dict with variables."""
     kwargs = {}
-    for k, v in d.items():
-        kwargs[k] = format_object(v, key_values, is_graphql)
+    for key, value in data.items():
+        logger.debug("format '%s' - is_graphql: %s", key, is_graphql)
+        kwargs[key] = format_object(
+            value,
+            key_values,
+            is_graphql=(is_graphql and key in ["body", "json", "query", "data"]),
+        )
     return kwargs

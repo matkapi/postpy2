@@ -1,0 +1,529 @@
+{
+    "auth":
+    {
+        "bearer":
+        [
+            {
+                "key": "token",
+                "type": "string",
+                "value": "{{bearer_token}}"
+            }
+        ],
+        "type": "bearer"
+    },
+    "info":
+    {
+        "_exporter_id": "21264686",
+        "_postman_id": "ee96e0ab-2d74-4cac-a175-5fe2e8e0748f",
+        "name": "tests",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item":
+    [
+        {
+            "item":
+            [
+                {
+                    "name": "test1",
+                    "request":
+                    {
+                        "header":
+                        [],
+                        "method": "GET",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "{{server_url}}"
+                            ],
+                            "path":
+                            [
+                                "get"
+                            ],
+                            "raw": "{{server_url}}/get"
+                        }
+                    },
+                    "response":
+                    []
+                },
+                {
+                    "name": "test2",
+                    "request":
+                    {
+                        "body":
+                        {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}"
+                        },
+                        "header":
+                        [
+                            {
+                                "key": "Content-type",
+                                "type": "text",
+                                "value": "application/json; charset=UTF-8"
+                            }
+                        ],
+                        "method": "POST",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "{{server_url}}"
+                            ],
+                            "path":
+                            [
+                                "post"
+                            ],
+                            "raw": "{{server_url}}/post"
+                        }
+                    },
+                    "response":
+                    []
+                },
+                {
+                    "name": "test file",
+                    "request":
+                    {
+                        "body":
+                        {
+                            "formdata":
+                            [
+                                {
+                                    "key": "file",
+                                    "src": "tests/testdata/assets/1.jpg",
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "title",
+                                    "type": "text",
+                                    "value": "foo"
+                                },
+                                {
+                                    "key": "body",
+                                    "type": "text",
+                                    "value": "bar"
+                                },
+                                {
+                                    "key": "userId",
+                                    "type": "text",
+                                    "value": "1"
+                                }
+                            ],
+                            "mode": "formdata"
+                        },
+                        "header":
+                        [
+                            {
+                                "disabled": true,
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "type": "text",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "method": "POST",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "{{server_url}}"
+                            ],
+                            "path":
+                            [
+                                "post"
+                            ],
+                            "raw": "{{server_url}}/post"
+                        }
+                    },
+                    "response":
+                    []
+                },
+                {
+                    "name": "graphql",
+                    "request":
+                    {
+                        "body":
+                        {
+                            "graphql":
+                            {
+                                "query": "{\n  countries {\n    code \n    name\n  }\n}\n",
+                                "variables": ""
+                            },
+                            "mode": "graphql"
+                        },
+                        "header":
+                        [
+                            {
+                                "key": "Content-Type",
+                                "type": "text",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "countries",
+                                "trevorblades",
+                                "com"
+                            ],
+                            "path":
+                            [
+                                ""
+                            ],
+                            "protocol": "https",
+                            "raw": "https://countries.trevorblades.com/"
+                        }
+                    },
+                    "response":
+                    []
+                }
+            ],
+            "name": "folder"
+        },
+        {
+            "item":
+            [
+                {
+                    "item":
+                    [
+                        {
+                            "name": "test file 2",
+                            "request":
+                            {
+                                "body":
+                                {
+                                    "formdata":
+                                    [
+                                        {
+                                            "key": "file",
+                                            "src": "tests/testdata/assets/1.jpg",
+                                            "type": "file"
+                                        },
+                                        {
+                                            "key": "title",
+                                            "type": "text",
+                                            "value": "foo"
+                                        },
+                                        {
+                                            "key": "body",
+                                            "type": "text",
+                                            "value": "bar"
+                                        },
+                                        {
+                                            "key": "userId",
+                                            "type": "text",
+                                            "value": "1"
+                                        }
+                                    ],
+                                    "mode": "formdata"
+                                },
+                                "header":
+                                [
+                                    {
+                                        "disabled": true,
+                                        "key": "Content-Type",
+                                        "name": "Content-Type",
+                                        "type": "text",
+                                        "value": "application/x-www-form-urlencoded"
+                                    }
+                                ],
+                                "method": "POST",
+                                "url":
+                                {
+                                    "host":
+                                    [
+                                        "{{server_url}}"
+                                    ],
+                                    "path":
+                                    [
+                                        "post"
+                                    ],
+                                    "raw": "{{server_url}}/post"
+                                }
+                            },
+                            "response":
+                            []
+                        }
+                    ],
+                    "name": "sub_folder1"
+                },
+                {
+                    "name": "test file 3",
+                    "request":
+                    {
+                        "body":
+                        {
+                            "formdata":
+                            [
+                                {
+                                    "key": "file",
+                                    "src": "tests/testdata/assets/1.jpg",
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "title",
+                                    "type": "text",
+                                    "value": "foo"
+                                },
+                                {
+                                    "key": "body",
+                                    "type": "text",
+                                    "value": "bar"
+                                },
+                                {
+                                    "key": "userId",
+                                    "type": "text",
+                                    "value": "1"
+                                }
+                            ],
+                            "mode": "formdata"
+                        },
+                        "header":
+                        [
+                            {
+                                "disabled": true,
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "type": "text",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "method": "POST",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "{{server_url}}"
+                            ],
+                            "path":
+                            [
+                                "post"
+                            ],
+                            "raw": "{{server_url}}/post"
+                        }
+                    },
+                    "response":
+                    []
+                }
+            ],
+            "name": "folder2"
+        },
+        {
+            "item":
+            [
+                {
+                    "item":
+                    [
+                        {
+                            "item":
+                            [
+                                {
+                                    "name": "test file 6",
+                                    "request":
+                                    {
+                                        "body":
+                                        {
+                                            "formdata":
+                                            [
+                                                {
+                                                    "key": "file",
+                                                    "src": "tests/testdata/assets/1.jpg",
+                                                    "type": "file"
+                                                },
+                                                {
+                                                    "key": "title",
+                                                    "type": "text",
+                                                    "value": "foo"
+                                                },
+                                                {
+                                                    "key": "body",
+                                                    "type": "text",
+                                                    "value": "bar"
+                                                },
+                                                {
+                                                    "key": "userId",
+                                                    "type": "text",
+                                                    "value": "1"
+                                                }
+                                            ],
+                                            "mode": "formdata"
+                                        },
+                                        "header":
+                                        [
+                                            {
+                                                "disabled": true,
+                                                "key": "Content-Type",
+                                                "name": "Content-Type",
+                                                "type": "text",
+                                                "value": "application/x-www-form-urlencoded"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "url":
+                                        {
+                                            "host":
+                                            [
+                                                "{{server_url}}"
+                                            ],
+                                            "path":
+                                            [
+                                                "post"
+                                            ],
+                                            "raw": "{{server_url}}/post"
+                                        }
+                                    },
+                                    "response":
+                                    []
+                                }
+                            ],
+                            "name": "sub_sub_folder1"
+                        },
+                        {
+                            "name": "test file 4",
+                            "request":
+                            {
+                                "body":
+                                {
+                                    "formdata":
+                                    [
+                                        {
+                                            "key": "file",
+                                            "src": "tests/testdata/assets/1.jpg",
+                                            "type": "file"
+                                        },
+                                        {
+                                            "key": "title",
+                                            "type": "text",
+                                            "value": "foo"
+                                        },
+                                        {
+                                            "key": "body",
+                                            "type": "text",
+                                            "value": "bar"
+                                        },
+                                        {
+                                            "key": "userId",
+                                            "type": "text",
+                                            "value": "1"
+                                        }
+                                    ],
+                                    "mode": "formdata"
+                                },
+                                "header":
+                                [
+                                    {
+                                        "disabled": true,
+                                        "key": "Content-Type",
+                                        "name": "Content-Type",
+                                        "type": "text",
+                                        "value": "application/x-www-form-urlencoded"
+                                    }
+                                ],
+                                "method": "POST",
+                                "url":
+                                {
+                                    "host":
+                                    [
+                                        "{{server_url}}"
+                                    ],
+                                    "path":
+                                    [
+                                        "post"
+                                    ],
+                                    "raw": "{{server_url}}/post"
+                                }
+                            },
+                            "response":
+                            []
+                        }
+                    ],
+                    "name": "sub_folder2"
+                },
+                {
+                    "name": "test file 5",
+                    "request":
+                    {
+                        "body":
+                        {
+                            "formdata":
+                            [
+                                {
+                                    "key": "file",
+                                    "src": "tests/testdata/assets/1.jpg",
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "title",
+                                    "type": "text",
+                                    "value": "foo"
+                                },
+                                {
+                                    "key": "body",
+                                    "type": "text",
+                                    "value": "bar"
+                                },
+                                {
+                                    "key": "userId",
+                                    "type": "text",
+                                    "value": "1"
+                                }
+                            ],
+                            "mode": "formdata"
+                        },
+                        "header":
+                        [
+                            {
+                                "disabled": true,
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "type": "text",
+                                "value": "application/x-www-form-urlencoded"
+                            }
+                        ],
+                        "method": "POST",
+                        "url":
+                        {
+                            "host":
+                            [
+                                "{{server_url}}"
+                            ],
+                            "path":
+                            [
+                                "post"
+                            ],
+                            "raw": "{{server_url}}/post"
+                        }
+                    },
+                    "response":
+                    []
+                }
+            ],
+            "name": "folder3"
+        },
+        {
+            "name": "root test",
+            "request":
+            {
+                "header":
+                [],
+                "method": "GET",
+                "url":
+                {
+                    "host":
+                    [
+                        "{{server_url}}"
+                    ],
+                    "path":
+                    [
+                        "get"
+                    ],
+                    "raw": "{{server_url}}/get"
+                }
+            },
+            "response":
+            []
+        }
+    ]
+}

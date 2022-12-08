@@ -24,7 +24,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Unit Test
-      run: pytest
+      run: scripts/run_tests.sh
 
     - name: Integration Test
       run: python tests/integration_test.py

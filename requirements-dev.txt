@@ -1,2 +1,6 @@
-pytest
+black
+coverage
 parameterized
+pytest
+pytest-cov
+vulture
