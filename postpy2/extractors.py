@@ -3,6 +3,8 @@ import logging
 import json
 import ntpath
 import os
+import re
+import ast
 from io import BytesIO
 
 import magic
