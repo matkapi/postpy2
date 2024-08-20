@@ -3,6 +3,8 @@ import logging
 import json
 import ntpath
 import os
+import re
+import ast
 from io import BytesIO
 
 import magic
@@ -16,11 +18,13 @@ def extract_dict_from_raw_mode_data(raw):
     :param raw: jsondata
     :return: :extracted dict
     """
+    
     try:
-        return json.loads(raw)
-    except json.decoder.JSONDecodeError:
-        return {}
-
+        raw_body_data = raw
+        raw_body_data = ast.literal_eval(raw_body_data)
+        return raw_body_data
+    except Exception as e:
+        return e
 
 def exctact_dict_from_files(data):
     """extract files from dict data.
